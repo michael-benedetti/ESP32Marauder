@@ -23,12 +23,12 @@ jobs:
           arduino-board-fqbn: esp32:esp32:nano_nora
           platform-url: https://github.com/espressif/arduino-esp32/releases/download/2.0.13/package_esp32_dev_index.json
 
-      - name: Pull arduino-esp32 v2.0.4
-        uses: actions/checkout@v2
-        with:
-          repository: espressif/arduino-esp32
-          ref: 2.0.4
-          path: 2.0.4arduino-esp32
+#      - name: Pull arduino-esp32 v2.0.4
+#        uses: actions/checkout@v2
+#        with:
+#          repository: espressif/arduino-esp32
+#          ref: 2.0.4
+#          path: 2.0.4arduino-esp32
 
       - name: Pull arduino-esp32 v2.0.13
         uses: actions/checkout@v2
@@ -172,11 +172,11 @@ jobs:
           echo "Chicken"
           for i in $(find /home/runner/.arduino15/packages/esp32/hardware/esp32/ -name "platform.txt"); do
             sed -i 's/compiler.c.elf.libs.esp32c3=/compiler.c.elf.libs.esp32c3=-zmuldefs /' "$i"
-            sed -i 's/compiler.c.elf.libs.esp32s3=/compiler.c.elf.libs.esp32s3=-zmuldefs /' "$i"
+            sed -i 's/compiler.c.elf.libs.nano_nora=/compiler.c.elf.libs.nano_nora=-zmuldefs /' "$i"
             sed -i 's/compiler.c.elf.libs.esp32s2=/compiler.c.elf.libs.esp32s2=-zmuldefs /' "$i"
             sed -i 's/compiler.c.elf.libs.esp32=/compiler.c.elf.libs.esp32=-zmuldefs /' "$i"
             cat "$i" | grep compiler.c.elf.libs.esp32c3
-            cat "$i" | grep compiler.c.elf.libs.esp32s3
+            cat "$i" | grep compiler.c.elf.libs.nano_nora
             cat "$i" | grep compiler.c.elf.libs.esp32s2
             cat "$i" | grep compiler.c.elf.libs.esp32
           done
@@ -230,7 +230,7 @@ jobs:
         uses: ArminJo/arduino-test-compile@v3.2.1
         with:
           sketch-names: esp32_marauder.ino
-          arduino-board-fqbn: esp32:esp32:esp32s3:PartitionScheme=min_spiffs,FlashSize=16M
+          arduino-board-fqbn: esp32:esp32:esp32s3:PartitionScheme=min_spiffs,FlashSize=16M,PSRAM=enabled
           extra-arduino-cli-args: "--warnings none"
 
       - name: Rename Marauder Multi Board bin
