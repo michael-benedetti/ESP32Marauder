@@ -187,11 +187,11 @@ jobs:
 #        run: |
 #          mv ./esp32_marauder/build/esp32.esp32.esp32s2/esp32_marauder.ino.bin ./esp32_marauder/build/esp32.esp32.esp32s2/esp32_marauder.flipper.bin
 #
-      - name: Configure SD Serial for Flipper Zero SD Serial
-        run: |
-          pwd
-          sed -i 's/^  \/\/#define WRITE_PACKETS_SERIAL/  #define WRITE_PACKETS_SERIAL/' esp32_marauder/configs.h
-#
+#      - name: Configure SD Serial for Flipper Zero SD Serial
+#        run: |
+#          pwd
+#          sed -i 's/^  \/\/#define WRITE_PACKETS_SERIAL/  #define WRITE_PACKETS_SERIAL/' esp32_marauder/configs.h
+##
 #      - name: Build Marauder SD Serial for Flipper Zero WiFi Dev Board
 #        uses: ArminJo/arduino-test-compile@v3.2.1
 #        with:
