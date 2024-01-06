@@ -21,14 +21,14 @@ jobs:
         with:
           sketch-names: TestFile.ino
           arduino-board-fqbn: arduino:esp32:nano_nora
-          platform-url: https://github.com/espressif/arduino-esp32/releases/download/2.0.13/package_esp32_dev_index.json
+          platform-url: https://github.com/espressif/arduino-esp32/releases/download/2.0.10/package_esp32_dev_index.json
 
-      - name: Pull arduino-esp32 v2.0.13
+      - name: Pull arduino-esp32 v2.0.10
         uses: actions/checkout@v2
         with:
           repository: espressif/arduino-esp32
-          ref: 2.0.13
-          path: 2.0.13
+          ref: 2.0.10
+          path: 2.0.10
 
       - name: Install AsyncTCP
         uses: actions/checkout@v2
@@ -152,7 +152,7 @@ jobs:
       - name: Modify platform.txt
         run: |
           echo "Chicken"
-          for i in $(find /home/runner/.arduino15/packages/esp32/hardware/esp32/ -name "platform.txt"); do
+          for i in $(find /home/runner/.arduino15/packages/arduino/hardware/esp32/ -name "platform.txt"); do
             sed -i 's/compiler.c.elf.libs.esp32c3=/compiler.c.elf.libs.esp32c3=-zmuldefs /' "$i"
             sed -i 's/compiler.c.elf.libs.esp32s3=/compiler.c.elf.libs.esp32s3=-zmuldefs /' "$i"
             sed -i 's/compiler.c.elf.libs.esp32s2=/compiler.c.elf.libs.esp32s2=-zmuldefs /' "$i"
