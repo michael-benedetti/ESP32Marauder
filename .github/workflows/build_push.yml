@@ -172,11 +172,11 @@ jobs:
           echo "Chicken"
           for i in $(find /home/runner/.arduino15/packages/esp32/hardware/esp32/ -name "platform.txt"); do
             sed -i 's/compiler.c.elf.libs.esp32c3=/compiler.c.elf.libs.esp32c3=-zmuldefs /' "$i"
-            sed -i 's/compiler.c.elf.libs.nano_nora=/compiler.c.elf.libs.nano_nora=-zmuldefs /' "$i"
+            sed -i 's/compiler.c.elf.libs.esp32s3=/compiler.c.elf.libs.esp32s3=-zmuldefs /' "$i"
             sed -i 's/compiler.c.elf.libs.esp32s2=/compiler.c.elf.libs.esp32s2=-zmuldefs /' "$i"
             sed -i 's/compiler.c.elf.libs.esp32=/compiler.c.elf.libs.esp32=-zmuldefs /' "$i"
             cat "$i" | grep compiler.c.elf.libs.esp32c3
-            cat "$i" | grep compiler.c.elf.libs.nano_nora
+            cat "$i" | grep compiler.c.elf.libs.esp32s3
             cat "$i" | grep compiler.c.elf.libs.esp32s2
             cat "$i" | grep compiler.c.elf.libs.esp32
           done
@@ -230,12 +230,12 @@ jobs:
         uses: ArminJo/arduino-test-compile@v3.2.1
         with:
           sketch-names: esp32_marauder.ino
-          arduino-board-fqbn: esp32:esp32:nano_nora:PartitionScheme=min_spiffs,FlashSize=16M,PSRAM=enabled
+          arduino-board-fqbn: esp32:esp32:esp32s3:PartitionScheme=min_spiffs,FlashSize=8M,PSRAM=enabled
           extra-arduino-cli-args: "--warnings none"
           
       - name: Rename Marauder Multi Board bin
         run: |
-          mv ./esp32_marauder/build/esp32.esp32.nano_nora/esp32_marauder.ino.bin ./esp32_marauder/build/esp32.esp32.nano_nora/esp32_marauder.multiboardS3.bin
+          mv ./esp32_marauder/build/esp32.esp32.esp32s3/esp32_marauder.ino.bin ./esp32_marauder/build/esp32.esp32.esp32s3/esp32_marauder.multiboardS3.bin
          
       - name: Configure TFT_eSPI and configs.h for OG Marauder
         run: |
@@ -475,7 +475,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: esp32_marauder.multiboardS3.bin
-          path: ./esp32_marauder/build/esp32.esp32.nano_nora/esp32_marauder.multiboardS3.bin
+          path: ./esp32_marauder/build/esp32.esp32.esp32s3/esp32_marauder.multiboardS3.bin
           retention-days: 5
           
       - name: 'Upload OG Artifact'
@@ -577,7 +577,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./esp32_marauder/build/esp32.esp32.nano_nora/esp32_marauder.multiboardS3.bin
+          asset_path: ./esp32_marauder/build/esp32.esp32.esp32s3/esp32_marauder.multiboardS3.bin
           asset_name: esp32_marauder.multiboardS3.bin
           asset_content_type: application/bin
         if: github.event_name != 'pull_request'
